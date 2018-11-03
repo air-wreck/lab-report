@@ -102,7 +102,7 @@ This is a little more convenient than simply wrapping all units within a \verb|t
 \verb|lab_report| also includes the \verb|chemfig| and \verb|mhchem| packages to allow you make chemical formulae and equations with ease. Generally, a quick inline formula can be made with \verb|mhchem| like this: \verb|\ce{H_2O}| gives \ce{H_2O}. A more complicated formula can be typeset using the \verb|chemfig| package.
 
 \section{Standard References}
-Since this document is primarily for chemistry labs, it comes with the standard EPA Substance Registry Service and the Chemical Safety Data Sheet Search citations built in. You can create a standard bibliography section with these two entries and dates automatically assigned to the day of the lab. Extending this section involves using the \verb|chemrefs| environment and the \verb|chemcite{label}{name}{url}| macro, which look like this:
+This template comes with some resources for automatically formatting a references section. You can make such a section using the \verb|chemrefs| environment. Adding entries involves using the \verb|chemcite{label}{name}{url}| macro, which looks like this:
 
 \begin{verbatim}
   \begin{chemrefs}
@@ -111,7 +111,9 @@ Since this document is primarily for chemistry labs, it comes with the standard 
   \end{chemrefs}
 \end{verbatim}
 
-This will automatically create a references section with EPA SRS and Safety Data Sheet Search already cited, in addition to however many citations you make with the \verb|chemcite| command. Note that all special characters are already escaped with this command: you do not need to manually type \verb|\_| to create \_, for example. The result of this is the ``References'' section at the end of this document.
+This will automatically create a references section with however many citations you make with the \verb|chemcite| command. Note that all special characters are already escaped with this command: you do not need to manually type \verb|\_| to create \_, for example. The result of this is the ``References'' section at the end of this document.
+
+The \verb|chemrefs| command can also take an optional date argument for the citation.
 
 \begin{chemrefs}
   \chemcite{wiki}{Wikipedia}{https://www.wikipedia.org/}

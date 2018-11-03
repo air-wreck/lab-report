@@ -91,8 +91,6 @@
 % one can optionally provide a date to use for the default entries
 \newenvironment{chemrefs}[1][\@date]{
   \begin{thebibliography}{99}
-    \chemcite[#1]{epa-srs}{EPA Substance Registry Service}{https://iaspub.epa.gov/sor_internet/registry/substreg/LandingPage.do}
-    \chemcite[#1]{ghs-pict}{Safety Data Sheet Search}{http://chemicalsafety.com/sds-search/}
 }{
   \end{thebibliography}
 }
