@@ -1,0 +1,119 @@
+\documentclass{lab_report}
+
+\title{A Sample Lab Report}
+\author{Eric Zheng}
+\sect{CSE}
+\partners{Adrian Thamburaj}{Sam Uwe Alws}
+\date{\today{}}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+This is a sample document for the \verb|lab_report| \LaTeX class template provided by the \verb|lab_report.cls| file. This document goes over some of the basic usage and design from this class.
+
+\section{Preamble}
+The \verb|lab_report| class provides some custom information in the title. Generally, the preamble takes the form:
+\begin{verbatim}
+  \title{A Sample Lab Report}                % title
+  \author{Eric Zheng}                        % author
+  \sect{CSE}                                 % section: defaults to CSE
+  \partners{Adrian Thamburaj}{Sam Uwe Alws}  % lab partners
+  \date{\today{}}                            % date: defaults to today's date
+\end{verbatim}
+
+This information is also used to construct the page header. Note that the \verb|\partners| macro currently accepts exactly two arguments. If you need to add more partners, you can get around this by putting multiple people in the first argument: \verb|\partners{One, Two}{Three}|. There is currently no support for zero or one partners; to do that, you will need to edit the \verb|.cls| file yourself.
+
+\section{Scientific Stuff}
+\subsection{Figures}
+Figure support does not go much beyond some basic formatting on top of the standard \verb|graphicx| package, which is included by default. For example, you can include the provided \verb|sample-graph.pdf| like this:
+\begin{verbatim}
+  \fig{sample-graph.pdf}
+  {The $textrm{sinc}(x, y)$ function plotted with \texttt{gnuplot}.}{sinc-plot}
+\end{verbatim}
+
+In general, this command takes the form:
+\begin{verbatim}
+  \fig{placement}{file}{caption}{label}
+\end{verbatim}
+
+Where \verb|placement| is an optional argument corresponding to a \LaTeX float placement option; it defaults to \verb|[h!]|. The above example produces the shown figure. Actually, I think it's best to not use the \verb|fig| command and just insert a figure like a normal person.
+
+\fig{sample-graph.pdf}
+{The $\textrm{sinc}(x, y)$ function plotted with \texttt{gnuplot}.}{sinc-plot}
+
+The figure can then be referenced in the document as Fig.~\ref{sinc-plot} by using the standard \verb|\ref{sinc-plot}| (you may need to recompile). The creation of such figures is beyond the scope of this document, but some free tools worth consideration are \verb|matplotlib| and \verb|gnuplot|.
+
+\subsection{Tables}
+Table formatting is provided by the custom \verb|chemtable| environment (which is really just a wrapper for a \verb|table| + \verb|threeparttable| + some formatting). This environment takes two arguments: the table title and the table label. You can define a new table like this:
+\begin{verbatim}
+  \begin{chemtable}{Table Title}{table-label}
+    \begin{tabular}{c c c}
+      \hline
+      Year & \% Projected Growth & Net Profit (\$)\\
+      \hline
+      2010 & 5.3 & 135,789.54 \\
+      2011 & 4.6 & 158,134.87 \\
+      2012 & 8.9 & 179,020.40 \\
+      \hline
+    \end{tabular}
+    \chemnotes{Values taken from absolutely nowhere.}  % creates a table note
+  \end{chemtable}
+\end{verbatim}
+
+This results in the formatted Table~\ref{table-label}.
+\begin{chemtable}{Table Title}{table-label}
+  \begin{tabular}{c c c}
+    \hline
+    Year & \% Projected Growth & Net Profit (\$)\\
+    \hline
+    2010 & 5.3 & 135,789.54 \\
+    2011 & 4.6 & 158,134.87 \\
+    2012 & 8.9 & 179,020.40 \\
+    \hline
+  \end{tabular}
+  \chemnotes{Values taken from absolutely nowhere.}  % creates a table note
+\end{chemtable}
+
+You can then refer to this table in the text as Table~\ref{table-label} by using \verb|\ref{table-label}|. Note that you may have to compile your document twice for this to work.
+Of course, if you need more customization, you can easily define your own tables within the standard \verb|table| environment. If you simply need to specify the placement of the table, you can do that with the optional argument \verb|placement|, like this:
+\begin{verbatim}
+  \begin{chemtable}{h!}{Table Title}{table-label}
+    <table content>
+  \end{chemtable}
+\end{verbatim}
+
+\subsection{SI Units}
+SI unit formatting is provided by the \verb|siunitx| package, which is already included by default. You can use this package to make units look consistent within equations:
+\begin{equation}
+  {\Delta}{m}=m_{f}-m_{i}=7.69~\si{\micro\gram}-4.23~\si{\micro\gram}=3.46~\si{\micro\gram}
+\end{equation}
+
+Which can be obtained with the following:
+\begin{verbatim}
+  \begin{equation}
+    {\Delta}{m}=m_{f}-m_{i}
+    =7.69~\si{\micro\gram}-4.23~\si{\micro\gram}=3.46~\si{\micro\gram}
+  \end{equation}
+\end{verbatim}
+
+This is a little more convenient than simply wrapping all units within a \verb|textrm| and provides logical support for characters like $\mu$.
+
+\subsection{Chemical Formulae}
+\verb|lab_report| also includes the \verb|chemfig| and \verb|mhchem| packages to allow you make chemical formulae and equations with ease. Generally, a quick inline formula can be made with \verb|mhchem| like this: \verb|\ce{H_2O}| gives \ce{H_2O}. A more complicated formula can be typeset using the \verb|chemfig| package.
+
+\section{Standard References}
+Since this document is primarily for chemistry labs, it comes with the standard EPA Substance Registry Service and the Chemical Safety Data Sheet Search citations built in. You can create a standard bibliography section with these two entries and dates automatically assigned to the day of the lab. Extending this section involves using the \verb|chemrefs| environment and the \verb|chemcite{label}{name}{url}| macro, which look like this:
+
+\begin{verbatim}
+  \begin{chemrefs}
+    \chemcite{wiki}{Wikipedia}{https://www.wikipedia.org/}
+    % of course, you shouldn't cite Wikipedia in a real lab...
+  \end{chemrefs}
+\end{verbatim}
+
+This will automatically create a references section with EPA SRS and Safety Data Sheet Search already cited, in addition to however many citations you make with the \verb|chemcite| command. Note that all special characters are already escaped with this command: you do not need to manually type \verb|\_| to create \_, for example. The result of this is the ``References'' section at the end of this document.
+
+\begin{chemrefs}
+  \chemcite{wiki}{Wikipedia}{https://www.wikipedia.org/}
+\end{chemrefs}
+\end{document}
